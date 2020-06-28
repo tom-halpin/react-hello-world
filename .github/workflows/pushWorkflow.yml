@@ -53,5 +53,6 @@ jobs:
           author_email: "tom_halpin@hotmail.com"
           message: "Deployed Images"
           add: "--all"
+          ref: "gh-pages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
