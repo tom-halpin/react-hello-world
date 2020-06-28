@@ -1,4 +1,4 @@
-FROM node:alpine3.12
+FROM node:12.16.1
 
 LABEL "name"="React Deployment"
 LABEL "maintainer"="Tom Halpin"
