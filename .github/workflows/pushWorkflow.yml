@@ -1,0 +1,45 @@
+---
+name: Push to Master - Workflow
+'on':
+  # Trigger this workflow on a push to the master branch
+  push:
+    branches:
+      - master
+jobs:
+  react-deployment:
+    name: react-deployment
+    runs-on: ubuntu-latest
+    needs: react-code-coverage
+    steps:
+      - name: Check out code.
+        uses: actions/checkout@v2
+      - name: React deployment
+        uses: ./.github/actions/react-deployment
+  deploy-images:
+    name: deploy-images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code.
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Deploy Images
+        shell: bash
+        run: |
+          echo "fetching the images from the images folder of the master branch into the images folder of the gh-pages branch"
+          git branch -a
+          git checkout gh-pages
+          # checkout the images folder from the master branches
+          # -- indicates do not interpret any more arguments as command options.
+          # and stage the files
+          git checkout master -- images
+          git status
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: "tom-halpin"
+          author_email: "tom_halpin@hotmail.com"
+          message: "Deployed Images"
+          add: "--all"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
