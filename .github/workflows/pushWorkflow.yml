@@ -6,7 +6,7 @@ name: Push to Master - Workflow
     branches:
       - master
 jobs:
-  deploy:
+  react-deployment:
     runs-on: ubuntu-latest
     strategy:
       matrix:
